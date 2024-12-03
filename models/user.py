@@ -1,51 +1,34 @@
-import bcrypt
 from core.lib.db import users_col
 
 class UserModel:
-    """Model untuk operasi pada koleksi 'users'."""
-
     @staticmethod
-    def create_default_admin():
-        """Membuat akun admin default jika belum ada."""
-        default_admin = {
-            "ID_USERS": "U01",
-            "EMAIL": "admin",
-            "PASSWORD": bcrypt.hashpw("admin123".encode('utf-8'), bcrypt.gensalt()),
-            "ROLE": "admin"
-        }
-        if not users_col.find_one({"EMAIL": default_admin["EMAIL"], "ROLE": default_admin["ROLE"]}):
-            users_col.insert_one(default_admin)
-            return True  # Admin dibuat
-        return False  # Admin sudah ada
-
-    @staticmethod
-    def generate_user_id():
+    def generate_users_id():
         """Menghasilkan ID_USERS baru berdasarkan urutan terakhir di database."""
-        last_user = users_col.find_one(sort=[("ID_USERS", -1)])  # Cari ID_USERS terbesar
-        if last_user:
-            last_id = int(last_user["ID_USERS"][1:])  # Ambil angka setelah 'U'
-            new_id = f"U{last_id + 1:02d}"  # Format dengan padding 4 digit
+        last_users = users_col.find_one(sort=[("ID_USERS", -1)])  
+        if last_users:
+            last_id = int(last_users["ID_USERS"][1:])  
+            new_id = f"D{last_id + 1:02d}" 
         else:
-            new_id = "U01"  # ID pertama
+            new_id = "D01" 
         return new_id
 
     @staticmethod
-    def find_by_email(email):
-        """Mencari user berdasarkan email."""
-        return users_col.find_one({"EMAIL": email})
+    def get_all():
+        return list(users_col.find({}))
 
     @staticmethod
-    def register_user(email, hashed_password, role):
-        """Mendaftarkan user baru ke koleksi users."""
-        user_id = UserModel.generate_user_id()
-        return users_col.insert_one({
-            "ID_USERS": user_id,  # Tambahkan ID_USERS
-            "EMAIL": email,
-            "PASSWORD": hashed_password,
-            "ROLE": role
-        })
+    def get_by_id(ID_USERS):
+        return users_col.find_one({"ID_USERS": ID_USERS})
 
     @staticmethod
-    def verify_password(plain_password, hashed_password):
-        """Verifikasi password yang diinput dengan hash di database."""
-        return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password)
+    def insert(data):
+        data["ID_USERS"] = UserModel.generate_users_id()
+        result = users_col.insert_one(data)
+        return result.inserted_id if result.inserted_id else None
+    @staticmethod
+    def update(ID_USERS, data):
+        return users_col.update_one({"ID_USERS": ID_USERS}, {"$set": data})
+
+    @staticmethod
+    def delete(ID_USERS):
+        return users_col.delete_one({"ID_USERS": ID_USERS})

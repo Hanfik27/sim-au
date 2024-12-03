@@ -22,4 +22,4 @@ class BaseView:
     @staticmethod
     def pause():
         """Pause layar."""
-        input("\nTekan Enter untuk melanjutkan...")
+        input("\nPress Enter to Main Menu...")

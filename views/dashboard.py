@@ -1,6 +1,4 @@
-from views.base import show_header, show_menu
-from views.mahasiswa import MahasiswaView
-
+from views.base import show_header, show_menu, BaseView
 class DashboardView:
     """Class untuk menampilkan dan mengelola menu dashboard."""
 
@@ -20,18 +18,18 @@ class DashboardView:
             print("0. Logout")
         elif role == "admin":
             print("\n=== Dashboard Admin ===")
-            print("1. Kelola Data Mahasiswa")
+            print("1. Kelola Data Absensi")
             print("2. Kelola Data Dosen")
-            print("3. Kelola Data Mata Kuliah")
-            print("4. Kelola Data Fakultas")
-            print("5. Kelola Data Jurusan")
-            print("6. Kelola Data ")
-            print("7. ")
-            print("8. ")
-            print("9. ")
-            print("10. ")
-            print("11. ")
-            print("12. ")
+            print("3. Kelola Data Fakultas")
+            print("4. Kelola Data Gedung")
+            print("5. Kelola Data Jadwal")
+            print("6. Kelola Data Jurusan")
+            print("7. Kelola Data Kelas")
+            print("8. Kelola Data Lab")
+            print("9. Kelola Data Mahasiswa")
+            print("10. Kelola Data Mata Kuliah")
+            print("11. Kelola Data Nilai")
+            print("12. Kelola Data Users")
             print("0. Logout")
         else:
             print("Role tidak dikenali.")

@@ -1,14 +1,14 @@
 from core.middleware.auth import AuthController
 from core.controllers.dashboard import DashboardController
-from models.user import UserModel
+from models.auth import AuthModel
 from views.base import BaseView
 
 def main():
-    UserModel.create_default_admin()
+    AuthModel.create_default_admin()
 
     while True:
         BaseView.clear_screen()
-        print("\n=== Sistem Informasi Akademik ===")
+        print("=== Sistem Informasi Akademik ===")
         print("1. Login")
         print("2. Register")
         print("0. Keluar")
@@ -19,8 +19,12 @@ def main():
             role = AuthController.login()
             if role:
                 DashboardController.show_dashboard(role)
+            BaseView.pause()
         elif choice == "2":
+            BaseView.clear_screen()
             AuthController.register()
+            BaseView.pause()
+
         elif choice == "0":
             print("Terima kasih telah menggunakan sistem ini.")
             break

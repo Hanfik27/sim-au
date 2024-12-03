@@ -5,7 +5,6 @@ class MahasiswaView:
     @staticmethod
     def menu():
         while True:
-            os.system('cls')
             print("\n=== Menu Mahasiswa ===")
             print("1. Lihat Mahasiswa")
             print("2. Cari Mahasiswa")
@@ -24,13 +23,12 @@ class MahasiswaView:
                 mahasiswa = MahasiswaController.find_mahasiswa(ID_MAHASISWA)
                 print(mahasiswa)
             elif pilihan == "3":
-                ID_MAHASISWA = input("Masukkan ID MAHASISWA: ")
                 NIM = input("Masukkan NIM: ")
                 NAMA = input("Masukkan Nama: ")
                 EMAIL = input("Masukkan Email: ")
                 NAMA_JURUSAN = input("Masukkan Jurusan: ")
                 NAMA_FAKULTAS = input("Masukkan Fakultas: ")
-                MahasiswaController.add_mahasiswa(ID_MAHASISWA, NIM, NAMA, EMAIL, NAMA_JURUSAN, NAMA_FAKULTAS)
+                MahasiswaController.add_mahasiswa(NIM, NAMA, EMAIL, NAMA_JURUSAN, NAMA_FAKULTAS)
             elif pilihan == "4":
                 ID_MAHASISWA = input("Masukkan ID: ")
                 NIM = input("NIM: ")
@@ -40,7 +38,7 @@ class MahasiswaView:
                 NAMA_FAKULTAS = input("Masukkan Fakultas baru: ")
                 MahasiswaController.update_mahasiswa(ID_MAHASISWA, NIM, NAMA, EMAIL, NAMA_JURUSAN, NAMA_FAKULTAS)
             elif pilihan == "5":
-                ID_MAHASISWA = input("Masukkan NIM: ")
+                ID_MAHASISWA = input("Masukkan ID MAHASISWA: ")
                 MahasiswaController.delete_mahasiswa(ID_MAHASISWA)
             elif pilihan == "0":
                 break
